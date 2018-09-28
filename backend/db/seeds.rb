@@ -1,7 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+Dog.delete_all
+
+def seed_dogs
+  all_dogs = PetFinderApi.get_dogs_array
+
+  all_dogs.each do |dog_hash|
+    Dog.first_or_create(dog_hash)
+  end
+end
+
+seed_dogs
