@@ -1,10 +1,10 @@
 import React from 'react'
 
 const DogFrontCard = (props) => {
-  const imgUrls = JSON.parse(props.dogData.photos)
+  const imgUrls = props.dogData.photos
   return (
     <div className='DogFrontCard'>
-      <img src={imgUrls[2]} onClick={props.toggleCard} /><br/>
+      <img src={imgUrls[0]} onClick={props.toggleCard} /><br/>
       Name: {props.dogData.name}<br/>
       Age: {props.dogData.age}<br/>
       Breed: {props.dogData.breed}<br/>
