@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/Navbar'
 import DogCardContainer from './components/DogCardContainer'
+import Adapter from './Adapter'
 
 class App extends Component {
   state = {
@@ -9,14 +10,17 @@ class App extends Component {
     size: "any",
     gender: "any",
     zip: "77002",
-    fetch: null,
+    dogArray: [],
   }
 
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state);
-    debugger
+    const dogArray = Adapter.getDogData(this.state.zip)
+    this.setState({
+      dogArray: dogArray
+    }, () => console.log(this.state.dogArray))
+
     //here's where we fetch, given the variables in state, then set state
   }
 
