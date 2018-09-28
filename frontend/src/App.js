@@ -13,18 +13,36 @@ class App extends Component {
     dogArray: [],
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault()
-    const dogArray = Adapter.getDogData(this.state.zip)
-    this.setState({
-      dogArray: dogArray
-    }, () => console.log(this.state.dogArray))
-
-    //here's where we fetch, given the variables in state, then set state
+    fetch('http://localhost:3000/dogs')
+      .then(r => r.json())
+      .then(this.saveDogs)
+    // (async () => {
+    //   const dogArray = await Adapter.getDogData(this.state.zip)
+    //
+    //   this.setState({
+    //     dogArray: dogArray
+    //   }, (data) => console.log(this.state.dogArray))
+    // })()
   }
 
+  saveDogs = (dogArray) => {
+    this.setState({dogArray})
+  }
 
+  handleClick = (e) => {
+    const newArray = this.state.dogArray
+    newArray.shift()
+    let yesOrNo = true
+    e.target.name === "save" ? yesOrNo = true : yesOrNo = false
+    debugger
+    Adapter.saveDogResult(this.state.dogArray[0].id, yesOrNo)
+    this.setState({
+      dogArray: newArray
+    })
+
+  }
 
   render() {
     return (
@@ -39,7 +57,10 @@ class App extends Component {
           />
         </header>
         <p className="App-intro">
-          <DogCardContainer />
+          <DogCardContainer
+            dogArray={this.state.dogArray}
+            handleClick={this.handleClick}
+          />
         </p>
       </div>
     );
