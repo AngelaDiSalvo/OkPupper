@@ -10,18 +10,20 @@ class App extends Component {
     size: "any",
     gender: "any",
     zip: "77002",
-    fetch: null,
+    dogArray: [],
   }
 
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state);
-    Adapter.getDogData(this.state.zip)
-    //here's where we fetch, given the variables in state, then set state
+    Adapter.getDogData(this.state.zip, this.handleAPIData)
   }
 
-
+  handleAPIData = data => {
+    this.setState({
+      dogArray: data
+    })
+  }
 
   render() {
     return (
