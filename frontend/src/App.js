@@ -13,15 +13,24 @@ class App extends Component {
     dogArray: [],
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault()
-    Adapter.getDogData(this.state.zip, this.handleAPIData)
+    Adapter.getDogData(this.state.zip, this.saveDogs)
   }
 
-  handleAPIData = data => {
+  saveDogs = (dogArray) => {
+    this.setState({dogArray})
+  }
+
+  handleClick = (e) => {
+    const newArray = this.state.dogArray
+    newArray.shift()
+    let yesOrNo = true
+    e.target.name === "save" ? yesOrNo = true : yesOrNo = false
+    debugger
+    Adapter.saveDogResult(this.state.dogArray[0].id, yesOrNo)
     this.setState({
-      dogArray: data
+      dogArray: newArray
     })
   }
 
@@ -38,7 +47,10 @@ class App extends Component {
           />
         </header>
         <p className="App-intro">
-          <DogCardContainer />
+          <DogCardContainer
+            dogArray={this.state.dogArray}
+            handleClick={this.handleClick}
+          />
         </p>
       </div>
     );
