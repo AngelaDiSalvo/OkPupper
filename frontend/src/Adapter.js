@@ -1,10 +1,10 @@
 class Adapter {
   static async getDogData(zipCode) {
-    // note:temporary fetch to api while waiting backend development
-
     let result = await fetch('http://localhost:3000/dogs')
     let dogs = await result.json()
-
+  
+    console.log(dogs["pet"])
+    
     return dogs["pet"].map(dog => ({
       pet_finder_id: dog[pet_finder_id],
       name: dog[name],
