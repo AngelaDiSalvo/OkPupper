@@ -1,7 +1,8 @@
 class PetFinderApi
   def self.get_dogs_array(zip_code)
     #note: how to add optional more dynamic location search
-    api_data = RestClient.get(`http://api.petfinder.com/pet.find?format=json&key=#{api_key}&location=#{zip_code}`) #note: enter url here
+    
+    api_data = RestClient.get("http://api.petfinder.com/pet.find?format=json&key=#{ENV['petFinderAPIKey']}&location=#{zip_code}") #note: enter url here
     parsed_data = JSON.parse(api_data)
     dogs_array = parsed_data["petfinder"]["pets"]["pet"]
 
@@ -11,7 +12,7 @@ class PetFinderApi
   end
 
   def self.get_dog_info(dog_id)
-    api_data= RestClient.get(`http://api.petfinder.com/pet.get?format=json&key=#{api_key}&id=#{dog_id}`)
+    api_data= RestClient.get("http://api.petfinder.com/pet.get?format=json&key=#{ENV['petFinderAPIKey']}&id=#{dog_id}")
     parsed_data = JSON.parse(api_data)
     dog_hash = parsed_data["petfinder"]["pet"]
 
