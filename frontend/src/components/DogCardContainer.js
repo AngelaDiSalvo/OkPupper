@@ -1,33 +1,33 @@
 import React from 'react'
-import DogCard from './DogCard'
-import Adapter from '../adapter'
+import DogFrontCard from './DogFrontCard'
+import DogBackCard from './DogBackCard'
 
+class DogCardContainer extends React.Component {
+  state = {
+    dogData: null,
+    dogArray: [],
+    cardFront: true
 
-  class DogCardContainer extends React.Component {
-    state = {
-      dogData: null,
-      dogArray: [],
-      zipCode: null,
-    }
-
-    // componentDidMount(){
-    //   this.setState({
-    //     dogArray: Adapter.getDogData(this.state.zipCode)
-    //   })
-    // }
-
-    handleStartClick = (e) => {
-      
-    }
-
-    render() {
-      return (
-        <div className='DogCardContainer'>
-          <button onClick={this.handleStartClick}>Start</button>
-          {this.state.dogData ? null : <DogCard dogData={this.state.dogData}/>}
-        </div>
-      )
-    }
   }
+
+  toggleCard = () => {
+    let toggle = this.state.cardFront
+    this.setState({
+      cardFront: !toggle
+    })
+  }
+
+
+
+  render() {
+    return (
+      <div className='DogCardContainer'>
+        {this.state.cardFront ? <DogFrontCard toggleCard={this.toggleCard} /> : <DogBackCard toggleCard={this.toggleCard} /> }
+
+
+      </div>
+    )
+  }
+}
 
 export default DogCardContainer;
