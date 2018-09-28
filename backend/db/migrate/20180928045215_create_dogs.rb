@@ -10,7 +10,6 @@ class CreateDogs < ActiveRecord::Migration[5.2]
       t.string :description
       t.datetime :last_update
       t.string :photos
-
       t.timestamps
     end
   end
