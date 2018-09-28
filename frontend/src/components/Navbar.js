@@ -2,8 +2,15 @@ import React from 'react'
 
   class Navbar extends React.Component {
     state = {
-      
+      savedDogs: false
 
+    }
+
+    showSavedDogs = () => {
+      const showingOrNot = this.state.savedDogs
+      this.setState({
+        savedDogs: !showingOrNot
+      })
     }
 
     render() {
@@ -32,6 +39,9 @@ import React from 'react'
             Enter Zip: <input onChange={this.props.handleZipChange}/>
             <input type="submit" value="Submit" />
           </form>
+          <div>
+            <h1><button onClick={this.showSavedDogs}><h1>Toggle Saved Dogs</h1></button></h1>
+          </div>
         </div>
       )
     }
