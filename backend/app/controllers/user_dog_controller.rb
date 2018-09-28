@@ -1,2 +1,0 @@
-class UserDogController < ApplicationController
-end
