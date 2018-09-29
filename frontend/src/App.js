@@ -15,7 +15,13 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    Adapter.getDogData(this.state.zip, this.saveDogs)
+    Adapter.getDogData({
+      zipCode: this.state.zip,
+      size: this.state.size,
+      gender: this.state.gender,
+      age: this.state.age,
+      callbackFunction: this.saveDogs
+    })
   }
 
   saveDogs = (dogArray) => {

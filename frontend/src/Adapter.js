@@ -1,5 +1,7 @@
 class Adapter {
-  static async getDogData(zipCode, callbackFunction) {
+  static async getDogData(args) {
+    const {zipCode, size, gender, age, callbackFunction} = args
+
     let result = await fetch('http://localhost:3000/dogs/get_dogs', {
       method: "POST",
       headers: {
@@ -7,25 +9,33 @@ class Adapter {
       },
       body: JSON.stringify({
         dog: {
-          zip_code: zipCode
+          zipCode,
+          size,
+          gender,
+          age
         }
       })
     })
     let dogs = await result.json()
-    
-    let formattedDogs = dogs.map(dog => ({
-      pet_finder_id: dog.pet_finder_id,
-      name: dog.name,
-      age: dog.age,
-      size: dog.size,
-      breed: dog.breed,
-      sex: dog.sex,
-      description: dog.description,
-      last_update: dog.last_update,
-      photos: dog.photos
-    }))
-    
-    callbackFunction(formattedDogs)
+
+    console.log(dogs);
+    if (dogs.length) {
+      let formattedDogs = dogs.map(dog => ({
+        pet_finder_id: dog.pet_finder_id,
+        name: dog.name,
+        age: dog.age,
+        size: dog.size,
+        breed: dog.breed,
+        sex: dog.sex,
+        description: dog.description,
+        last_update: dog.last_update,
+        photos: dog.photos
+      }))
+
+      return callbackFunction(formattedDogs)
+    } else {
+      return "No dogs matching criteria"
+    }
   }
 }
 

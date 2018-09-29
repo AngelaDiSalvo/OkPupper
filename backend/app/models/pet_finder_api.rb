@@ -1,13 +1,24 @@
 class PetFinderApi
-  def self.get_dogs_array(zip_code)
+  def self.get_dogs_array(filters)
     #note: how to add optional more dynamic location search
 
-    api_data = RestClient.get("http://api.petfinder.com/pet.find?format=json&animal=dog&key=#{ENV['petFinderAPIKey']}&location=#{zip_code}") 
+    base_api_url = "http://api.petfinder.com/pet.find?format=json&animal=dog&key=#{ENV['petFinderAPIKey']}&"
+
+    final_api_url = base_api_url + URI.encode_www_form(filters)
+
+    puts final_api_url
+
+    api_data = RestClient.get(final_api_url)
+
     parsed_data = JSON.parse(api_data)
     dogs_array = parsed_data["petfinder"]["pets"]["pet"]
 
-    dogs_array.map do |dog_hash|
-      self.parse_one_dog(dog_hash)
+    puts dogs_array
+
+    if dogs_array.size > 0
+      dogs_array.map do |dog_hash|
+        self.parse_one_dog(dog_hash)
+      end
     end
   end
 
@@ -22,13 +33,12 @@ class PetFinderApi
   private
 
   def self.parse_one_dog(dog_hash)
-    # note: need to confirm only large photos shown
     large_photos_hash = dog_hash["media"]["photos"]["photo"].select do |photo_hash|
       photo_hash["@size"] == "x"
     end
 
     large_photos_array = large_photos_hash.map{|photo| photo["$t"]}
-    
+
     dog_breed_array = []
     dog_hash["breeds"]["breed"].each do |breed|
       if breed.class == Array
@@ -37,7 +47,7 @@ class PetFinderApi
         dog_breed_array.push(breed["$t"])
       end
     end
-  
+
     {
       pet_finder_id: dog_hash["id"]["$t"],
       name: dog_hash["name"]["$t"],
