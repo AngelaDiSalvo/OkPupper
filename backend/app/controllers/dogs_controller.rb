@@ -5,7 +5,6 @@ class DogsController < ApplicationController
   end
 
   def get_pet_finder_dogs
-    #note: finish writing gender and add support for any
     potential_filters = [
       ["location", dog_params[:zipCode]],
       ["size", convert_size(dog_params[:size])],

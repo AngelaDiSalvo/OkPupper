@@ -16,9 +16,9 @@ class Adapter {
         }
       })
     })
+
     let dogs = await result.json()
 
-    console.log(dogs);
     if (dogs.length) {
       let formattedDogs = dogs.map(dog => ({
         pet_finder_id: dog.pet_finder_id,
@@ -36,6 +36,24 @@ class Adapter {
     } else {
       return "No dogs matching criteria"
     }
+  }
+
+  static async saveDogResult(petFinderId, isUserSaving) {
+    let result = await fetch('http://localhost:3000/user_dogs', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_dog: {
+          userId: 5,
+          petFinderId,
+          isUserSaving
+        }
+      })
+    })
+
+    let dogs = await result.json()
   }
 }
 

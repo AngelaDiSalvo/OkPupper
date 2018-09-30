@@ -29,12 +29,13 @@ class App extends Component {
   }
 
   handleClick = (e) => {
+    e.preventDefault()
+
     const newArray = this.state.dogArray
     newArray.shift()
-    let yesOrNo = true
-    e.target.name === "save" ? yesOrNo = true : yesOrNo = false
-    debugger
-    Adapter.saveDogResult(this.state.dogArray[0].id, yesOrNo)
+
+    Adapter.saveDogResult(this.state.dogArray[0].pet_finder_id, e.target.name === "save")
+
     this.setState({
       dogArray: newArray
     })

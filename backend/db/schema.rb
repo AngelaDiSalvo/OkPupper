@@ -17,14 +17,6 @@ ActiveRecord::Schema.define(version: 2018_09_28_191832) do
 
   create_table "dogs", force: :cascade do |t|
     t.integer "pet_finder_id"
-    t.string "name"
-    t.string "age"
-    t.string "size"
-    t.string "breed"
-    t.string "sex"
-    t.string "description"
-    t.datetime "last_update"
-    t.string "photos"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,6 +24,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_191832) do
   create_table "user_dogs", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "dog_id"
+    t.boolean "is_saved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dog_id"], name: "index_user_dogs_on_dog_id"
