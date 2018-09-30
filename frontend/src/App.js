@@ -14,6 +14,10 @@ class App extends Component {
     searchOffset: false
   }
 
+  componentDidUpdate() {
+    // note for angela: we can put if this.state.dogArray < X logic here to request additional dogs
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
     Adapter.getDogData({
@@ -26,8 +30,10 @@ class App extends Component {
     })
   }
 
-  saveDogs = (dogArray, searchOffset) => {
-    this.setState({dogArray, searchOffset})
+  saveDogs = (newDogArray, searchOffset) => {
+    this.setState({
+      dogArray: [...this.state.dogArray, ...newDogArray],
+      searchOffset})
   }
 
   handleClick = (e) => {

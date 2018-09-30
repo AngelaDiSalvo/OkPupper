@@ -19,6 +19,7 @@ class Adapter {
     })
 
     let all_data = await result.json()
+
     let dogs = all_data["dogs"]
     let searchOffset = all_data["search_offset"]
 
