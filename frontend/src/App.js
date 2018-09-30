@@ -11,6 +11,7 @@ class App extends Component {
     gender: "any",
     zip: "77002",
     dogArray: [],
+    searchOffset: false
   }
 
   handleSubmit = (e) => {
@@ -20,12 +21,13 @@ class App extends Component {
       size: this.state.size,
       gender: this.state.gender,
       age: this.state.age,
+      offset: this.state.searchOffset,
       callbackFunction: this.saveDogs
     })
   }
 
-  saveDogs = (dogArray) => {
-    this.setState({dogArray})
+  saveDogs = (dogArray, searchOffset) => {
+    this.setState({dogArray, searchOffset})
   }
 
   handleClick = (e) => {

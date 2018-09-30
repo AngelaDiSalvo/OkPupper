@@ -1,6 +1,6 @@
 class Adapter {
   static async getDogData(args) {
-    const {zipCode, size, gender, age, callbackFunction} = args
+    const {zipCode, size, gender, age, offset, callbackFunction} = args
 
     let result = await fetch('http://localhost:3000/dogs/get_dogs', {
       method: "POST",
@@ -12,12 +12,15 @@ class Adapter {
           zipCode,
           size,
           gender,
-          age
+          age,
+          offset
         }
       })
     })
 
-    let dogs = await result.json()
+    let all_data = await result.json()
+    let dogs = all_data["dogs"]
+    let searchOffset = all_data["search_offset"]
 
     if (dogs.length) {
       let formattedDogs = dogs.map(dog => ({
@@ -32,7 +35,7 @@ class Adapter {
         photos: dog.photos
       }))
 
-      return callbackFunction(formattedDogs)
+      return callbackFunction(formattedDogs, searchOffset)
     } else {
       return "No dogs matching criteria"
     }

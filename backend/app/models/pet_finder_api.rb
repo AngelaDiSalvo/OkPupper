@@ -5,21 +5,23 @@ class PetFinderApi
     base_api_url = "http://api.petfinder.com/pet.find?format=json&animal=dog&key=#{ENV['petFinderAPIKey']}&"
 
     final_api_url = base_api_url + URI.encode_www_form(filters)
-
-    puts final_api_url
-
     api_data = RestClient.get(final_api_url)
 
     parsed_data = JSON.parse(api_data)
+
+    returned_data = {
+      search_offset: parsed_data["petfinder"]["lastOffset"]["$t"]
+    }
+
     dogs_array = parsed_data["petfinder"]["pets"]["pet"]
 
-    puts dogs_array
-
     if dogs_array.size > 0
-      dogs_array.map do |dog_hash|
+      returned_data["dogs"] = dogs_array.map do |dog_hash|
         self.parse_one_dog(dog_hash)
       end
     end
+
+    returned_data
   end
 
   def self.get_dog_info(dog_id)
@@ -33,6 +35,8 @@ class PetFinderApi
   private
 
   def self.parse_one_dog(dog_hash)
+    #note for ryhan: sometimes this returns nilclass: [] error. Likely on photo or breed array, need to handle gracefully so no error thrown
+
     large_photos_hash = dog_hash["media"]["photos"]["photo"].select do |photo_hash|
       photo_hash["@size"] == "x"
     end

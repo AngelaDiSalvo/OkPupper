@@ -9,7 +9,8 @@ class DogsController < ApplicationController
       ["location", dog_params[:zipCode]],
       ["size", convert_size(dog_params[:size])],
       ["age", convert_age(dog_params[:age])],
-      ["sex", convert_gender(dog_params[:gender])]
+      ["sex", convert_gender(dog_params[:gender])],
+      ["offset", dog_params[:offset]]
     ]
 
     requested_filters = potential_filters.select {|filter| filter[1]}
@@ -22,7 +23,7 @@ class DogsController < ApplicationController
   private
 
   def dog_params
-    params.require(:dog).permit(:zipCode, :size, :gender, :age)
+    params.require(:dog).permit(:zipCode, :size, :gender, :age, :offset)
   end
 
   def convert_size(unformatted_size)
