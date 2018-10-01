@@ -18,9 +18,9 @@ class DogsController < ApplicationController
     api_data = PetFinderApi.get_dogs_array(requested_filters)
 
     #note: also need to check if dogs have been saved in DB before returning new dogs; this is expensive, maybe push to client side
-
+    
     filtered_data = {
-      api_data: api_data[search_offset],
+      api_data: api_data[:search_offset],
       dogs: filter_viewed_dogs(api_data["dogs"])
     }
 
@@ -36,52 +36,35 @@ class DogsController < ApplicationController
   end
 
   def convert_size(unformatted_size)
-    case unformatted_size.downcase
-      when 'small'
-        'S'
-      when 'medium'
-        'M'
-      when 'large'
-        'L'
-      when 'xl'
-        'XL'
-      when 'any'
-        false
-      else
-        'Unknown size input'
+    if unformatted_size.downcase == 'any'
+      false
+    elsif unformatted_size.downcase == 'small' || unformatted_size.downcase == 'medium' || unformatted_size.downcase == 'large' || unformatted_size.downcase == 'xl'
+      unformatted_size.downcase
+    else
+      'Unknown size input'
     end
   end
 
   def convert_age(unformatted_age)
-    case unformatted_age.downcase
-      when 'puppy'
-        'Baby'
-      when 'young'
-        'Young'
-      when 'adult'
-        'Adult'
-      when 'senior'
-        'Senior'
-      when 'any'
-        false
-      else
-        'Unknown age input'
+    if unformatted_age.downcase == 'any'
+      false
+    elsif unformatted_age.downcase == 'puppy' || unformatted_age.downcase == 'young' || unformatted_age.downcase == 'adult' || unformatted_age.downcase == 'senior'
+      unformatted_age.downcase
+    else
+      'Unknown age input'
     end
   end
 
   def convert_gender(unformatted_gender)
-    case unformatted_gender.downcase
-      when 'male'
-        'M'
-      when 'female'
-        'F'
-      when 'any'
-        false
-      else
-        'Unknown gender input'
+    if unformatted_gender.downcase == 'any'
+      false
+    elsif unformatted_gender.downcase == 'male' || unformatted_gender.downcase == 'female'
+      unformatted_gender.downcase
+    else
+      'Unknown gender input'
     end
   end
-
+    
   def filter_viewed_dogs(dogs_array)
     #note: this logic needs to be replaced with UserDog once we have user
     dogs_array.reject {|dog_object| Dog.exists?(pet_finder_id: dog_object[:pet_finder_id])}
