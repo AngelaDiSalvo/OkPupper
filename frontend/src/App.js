@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar'
 import DogCardContainer from './components/DogCardContainer'
 import Adapter from './Adapter'
+import Homepage from "./components/Homepage"
 
 class App extends Component {
   state = {
@@ -11,12 +12,38 @@ class App extends Component {
     gender: "any",
     zip: "77002",
     dogArray: [],
-    searchOffset: false
+    searchOffset: false,
+    username: "",
+    password: "",
+    zipCode: "",
+    email: "",
+    isLoggedIn: false,
+    toggleSignUp: false,
+    toggleLogin: false
   }
 
   componentDidUpdate() {
     // note for angela: we can put if this.state.dogArray < X logic here to request additional dogs
   }
+
+  signUpRedirect = e => {
+    this.setState({
+      toggleSignUp: true
+    })
+  }
+
+  loginRedirect = e => {
+    this.setState({
+      toggleLogin:true
+    })
+  }
+
+  // const signUpRedirect = e => {
+  //   //when something is true, show the signup form.
+  //   this.setState({
+  //     toggleSignUp: true
+  //   })
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -50,6 +77,7 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.isLoggedIn) {
     return (
       <div className="App">
         <header className="App-header">
@@ -68,8 +96,24 @@ class App extends Component {
           />
         </p>
       </div>
-    );
-  }
+    )
+  };
+
+  return (
+    <div>
+      <Homepage
+        signUpRedirect={this.signUpRedirect}
+        toggleSignUp={this.state.toggleSignUp}
+        loginRedirect={this.loginRedirect}
+        toggleLogin={this.state.toggleLogin}
+        username={this.state.username}
+        password={this.state.password}
+        email={this.state.email}
+        zipCode={this.state.zipCode}
+      />
+    </div>
+  )
+}
 }
 
 export default App;
