@@ -2,6 +2,7 @@ import React from 'react'
 
 const DogFrontCard = (props) => {
   const imgUrls = props.dogData.photos
+  console.log(props.dogData.pet_finder_id);
   return (
     <div className='DogFrontCard'>
       <img src={imgUrls[0]} onClick={props.toggleCard} /><br/>

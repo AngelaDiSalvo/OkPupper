@@ -17,13 +17,16 @@ class App extends Component {
     password: "",
     zipCode: "",
     email: "",
-    isLoggedIn: false,
+    isLoggedIn: true,
     toggleSignUp: false,
     toggleLogin: false
   }
 
   componentDidUpdate() {
-    // note for angela: we can put if this.state.dogArray < X logic here to request additional dogs
+    console.log(this.state.dogArray.length);
+    if (this.state.dogArray.length < 10) {
+      this.getDogData()
+    } 
   }
 
   signUpRedirect = e => {
@@ -47,6 +50,11 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({searchOffset: 0, dogArray: []})
+    this.getDogData()
+  }
+  
+  getDogData = () => {
     Adapter.getDogData({
       zipCode: this.state.zip,
       size: this.state.size,
@@ -57,10 +65,13 @@ class App extends Component {
     })
   }
 
-  saveDogs = (newDogArray, searchOffset) => {
+  saveDogs = (dogArray, searchOffset) => {
+    const combinedDogArray = [...this.state.dogArray, ...dogArray]
+    const uniqueDogArray = [...new Set([].concat(...combinedDogArray))]
     this.setState({
-      dogArray: [...this.state.dogArray, ...newDogArray],
-      searchOffset})
+      dogArray: uniqueDogArray,
+      searchOffset
+    })
   }
 
   handleClick = (e) => {

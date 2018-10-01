@@ -13,7 +13,9 @@ class UsersController < ApplicationController
     render json: current_user
   end 
 
-    private
-    def user_params
-      params.require(:user).permit(:username, :password, :email, :zip_code)
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :password)
+  end
 end

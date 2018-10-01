@@ -92,8 +92,7 @@ class UserDogsController < ApplicationController
   end
 
   def filter_viewed_dogs(user_id, dogs_array)
-    user_dogs = UserDog.where(["user_id = :user_id and is_saved = :is_saved", {user_id: user_id, is_saved: true}])
-    # byebug
+    user_dogs = UserDog.where(["user_id = :user_id", {user_id: user_id}])
     
     transformed_user_dogs = user_dogs.map{|dog_object| dog_object.pet_finder_id}
     
