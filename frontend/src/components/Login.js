@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 
 const Login = (props) => {
   return (
-    <div />
+    <form onSubmit={console.log}>
+      <label>
+        Username:
+        <input type="text" username="username"/>
+        Password:
+        <input type="text" password="password"/>
+      </label>
+      <input type="submit" value="Login"/>
+    </form>
   )
 }
 
