@@ -19,7 +19,7 @@ const Homepage = (props) => {
     } else if (props.toggleSignUp === true) {
       return (
         <div>
-          <Signup />
+          <Signup submitCredentials={props.submitCredentials}/>
         </div>
       )
     } else if (props.toggleLogin === true) {

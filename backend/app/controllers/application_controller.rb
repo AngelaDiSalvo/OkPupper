@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   def encode_token(payload)
-  # payload => { beef: 'steak' }
     JWT.encode(payload, 'app_wide_secret_for_every_user')
+  # payload => { beef: 'steak' }
   # jwt string: "eyJhbGciOiJIUzI1NiJ9.eyJiZWVmIjoic3RlYWsifQ._IBTHTLGX35ZJWTCcY30tLmwU9arwdpNVxtVU0NpAuI"
   end
 
