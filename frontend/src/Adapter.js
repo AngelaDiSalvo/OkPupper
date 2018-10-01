@@ -35,10 +35,9 @@ class Adapter {
         last_update: dog.last_update,
         photos: dog.photos
       }))
-
       return callbackFunction(formattedDogs, searchOffset)
     } else {
-      return "No dogs matching criteria"
+      console.log("No dogs matching criteria")
     }
   }
 
