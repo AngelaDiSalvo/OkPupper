@@ -1,4 +1,3 @@
-Dog.delete_all
 User.delete_all
 UserDog.delete_all
 

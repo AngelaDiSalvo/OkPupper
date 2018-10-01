@@ -2,7 +2,7 @@ class Adapter {
   static async getDogData(args) {
     const {zipCode, size, gender, age, offset, callbackFunction} = args
 
-    let result = await fetch('http://localhost:3000/dogs/get_dogs', {
+    let result = await fetch('http://localhost:3000/user_dogs/get_dogs', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

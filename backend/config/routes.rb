@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :dogs, only: [:index]
   resources :user_dogs
 
-  post 'dogs/get_dogs', :to => 'dogs#get_pet_finder_dogs'
+  post 'user_dogs/get_dogs', :to => 'user_dogs#get_pet_finder_dogs'
 end

@@ -15,19 +15,12 @@ ActiveRecord::Schema.define(version: 2018_09_28_191832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "dogs", force: :cascade do |t|
-    t.integer "pet_finder_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "user_dogs", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "dog_id"
+    t.integer "pet_finder_id"
     t.boolean "is_saved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["dog_id"], name: "index_user_dogs_on_dog_id"
     t.index ["user_id"], name: "index_user_dogs_on_user_id"
   end
 
