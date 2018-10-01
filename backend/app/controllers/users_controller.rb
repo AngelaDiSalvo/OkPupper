@@ -11,9 +11,10 @@ class UsersController < ApplicationController
 
   def profile
     render json: current_user
-  end 
+  end
 
-    private
-    def user_params
-      params.require(:user).permit(:username, :password, :email, :zip_code)
+  private
+  def user_params
+    params.require(:user).permit(:username, :password, :email, :zip_code)
+  end
 end
