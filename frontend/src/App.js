@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar'
 import DogCardContainer from './components/DogCardContainer'
 import Adapter from './Adapter'
+import Homepage from "./components/Homepage"
 
 class App extends Component {
   state = {
@@ -11,7 +12,12 @@ class App extends Component {
     gender: "any",
     zip: "77002",
     dogArray: [],
-    searchOffset: false
+    searchOffset: false,
+    username: "",
+    password: "",
+    zipCode: "",
+    email: "",
+    isLoggedIn: false
   }
 
   componentDidUpdate() {
@@ -49,7 +55,10 @@ class App extends Component {
     })
   }
 
+  //
+
   render() {
+    if (this.state.isLoggedIn) {
     return (
       <div className="App">
         <header className="App-header">
@@ -68,8 +77,14 @@ class App extends Component {
           />
         </p>
       </div>
-    );
-  }
+    )
+  };
+  return (
+    <div>
+      <Homepage />
+    </div>
+  )
+}
 }
 
 export default App;
