@@ -9,11 +9,11 @@ UserDog.delete_all
 # end
 
 # ryhan =
-User.create(username: "RyhanC", password: "ryhan", email: "ryhan@example.com", zip_code: 77407)
+User.create(password: "ryhan", email: "ryhan@example.com")
 # angela =
-User.create(username: "AngelaD", password: "angela", email: "angela@example.com", zip_code: 77002)
+User.create(password: "angela", email: "angela@example.com")
 # stephen =
-User.create(username: "StephenF", password: "stephen", email: "stephen@example.com", zip_code: 77002)
+User.create(password: "stephen", email: "stephen@example.com")
 
 # seed_dogs
 #

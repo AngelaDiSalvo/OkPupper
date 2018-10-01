@@ -65,9 +65,19 @@ class App extends Component {
     })
   }
 
+  submitCredentials = e => {
+    e.preventDefault()
+    console.log(e)
+    Adapter.createNewUser({
+      email: e.target[0].value,
+      password: e.target[1].value
+    })
+  }
+
   saveDogs = (dogArray, searchOffset) => {
     const combinedDogArray = [...this.state.dogArray, ...dogArray]
     const uniqueDogArray = [...new Set([].concat(...combinedDogArray))]
+
     this.setState({
       dogArray: uniqueDogArray,
       searchOffset
@@ -117,6 +127,7 @@ class App extends Component {
         toggleSignUp={this.state.toggleSignUp}
         loginRedirect={this.loginRedirect}
         toggleLogin={this.state.toggleLogin}
+        submitCredentials={this.submitCredentials}
         username={this.state.username}
         password={this.state.password}
         email={this.state.email}

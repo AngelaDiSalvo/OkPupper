@@ -58,9 +58,26 @@ class Adapter {
 
     let dogs = await result.json()
   }
-  
+
   static async getSavedDogs() {
     let result = await fetch('http://localhost:3000/user_dogs')
+  }
+
+  static async createNewUser(args) {
+    const {email, password} = args
+
+    let result = await fetch('http://localhost:3000/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          email,
+          password
+        }
+      })
+    })
   }
 }
 
