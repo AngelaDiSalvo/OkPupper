@@ -18,13 +18,13 @@ class DogsController < ApplicationController
     api_data = PetFinderApi.get_dogs_array(requested_filters)
 
     #note: also need to check if dogs have been saved in DB before returning new dogs; this is expensive, maybe push to client side
-    
+
     filtered_data = {
       api_data: api_data[:search_offset],
       dogs: filter_viewed_dogs(api_data["dogs"])
     }
-    
-    if filtered_data["dogs"].count > 0
+
+    if filtered_data[:dogs].count > 0
       render json: filtered_data
     else
       render json: {status: 500, message: "No dogs matching criteria"}.to_json
@@ -32,7 +32,6 @@ class DogsController < ApplicationController
   end
 
   private
-
   def dog_params
     params.require(:dog).permit(:zipCode, :size, :gender, :age, :offset)
   end
@@ -66,10 +65,9 @@ class DogsController < ApplicationController
       'Unknown gender input'
     end
   end
-    
+
   def filter_viewed_dogs(dogs_array)
     #note: this logic needs to be replaced with UserDog once we have user
-    byebug
     dogs_array.reject {|dog_object| Dog.exists?(pet_finder_id: dog_object[:pet_finder_id])}
   end
 end

@@ -5,19 +5,27 @@ import Login from "./Login"
 
 const Homepage = (props) => {
   //have a button that redirects you to either the login or signup page
-  return (
-    <div> Welcome to OkPupper
-        <button onClick={e => signUpRedirect(e)}>Sign up</button>
-        <button onClick={console.log}>Login</button>
-    </div>
-  )
+  if (props.toggleSignUp === false && props.toggleLogin === false) {
+    return (
+      <div> Welcome to OkPupper
+          <button onClick={e => props.signUpRedirect(e)}>Sign up</button>
+          <button onClick={e => props.loginRedirect(e)}>Login</button>
+      </div>
+      )
+    } else if (props.toggleSignUp === true) {
+      return (
+        <div>
+          <Signup />
+        </div>
+      )
+    } else if (props.toggleLogin === true) {
+      return (
+        <div>
+          <Login />
+        </div>
+      )
+    }
 }
-//when button is clicked, the page needs to be redirected
-const signUpRedirect = e => {
-  //when something is true, show the signup form.
-  return (
-    <Signup />
-  )
-}
+
 
 export default Homepage
