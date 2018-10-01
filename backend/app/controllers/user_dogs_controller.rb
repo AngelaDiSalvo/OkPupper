@@ -14,8 +14,14 @@ class UserDogsController < ApplicationController
   end
   
   def index
-    dogs = UserDog.where(user.id == user_dog_params[:userId])
-    byebug
+    dogs = UserDog.all
+    
+    dogs.map { |dog| dog.pet_finder_id}
+    
+    puts dogs
+    #note: update to user id when add authentication
+    # where(user.id == user_dog_params[:userId])
+    render json: dogs
   end
 
   private

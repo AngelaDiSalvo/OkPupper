@@ -25,7 +25,7 @@ class DogsController < ApplicationController
     }
     
     if filtered_data["dogs"].count > 0
-      render json: filtered_data {status: 200}
+      render json: filtered_data
     else
       render json: {status: 500, message: "No dogs matching criteria"}.to_json
     end
