@@ -1,6 +1,7 @@
 import React from 'react'
-import './signup.css';
 // note: add password and password2 check here
+import '../css/homepage.css';
+
   const Signup = (props) => {
     return (
       <form onSubmit={e => props.submitCredentials(e)} id="login-box">
