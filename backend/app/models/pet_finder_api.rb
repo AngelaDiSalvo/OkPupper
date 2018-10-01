@@ -3,9 +3,9 @@ class PetFinderApi
     #note: how to add optional more dynamic location search
 
     base_api_url = "http://api.petfinder.com/pet.find?format=json&animal=dog&key=#{ENV['petFinderAPIKey']}&"
-    
-    converted_filters = self.convert_filters(filters)  
-  
+
+    converted_filters = self.convert_filters(filters)
+
     final_api_url = base_api_url + URI.encode_www_form(converted_filters)
     api_data = RestClient.get(final_api_url)
     parsed_data = JSON.parse(api_data)
@@ -38,7 +38,6 @@ class PetFinderApi
 
   def self.parse_one_dog(dog_hash)
     #note for ryhan: sometimes this returns nilclass: [] error. Likely on photo or breed array, need to handle gracefully so no error thrown
-
     large_photos_hash = dog_hash["media"]["photos"]["photo"].select do |photo_hash|
       photo_hash["@size"] == "x"
     end
@@ -66,7 +65,7 @@ class PetFinderApi
       photos: large_photos_array
     }
   end
-  
+
   def self.convert_filters(filters)
     filters.map do |filter_touple|
       if filter_touple[0] == "size"
@@ -80,7 +79,7 @@ class PetFinderApi
       filter_touple
     end
   end
-  
+
   def self.convert_size(unformatted_size)
     case unformatted_size.downcase
       when 'small'
@@ -93,7 +92,7 @@ class PetFinderApi
         'XL'
     end
   end
-  
+
   def self.convert_age(unformatted_age)
     case unformatted_age.downcase
       when 'puppy'
@@ -106,7 +105,7 @@ class PetFinderApi
         'Senior'
     end
   end
-  
+
   def self.convert_sex(unformatted_sex)
     case unformatted_sex.downcase
       when 'male'

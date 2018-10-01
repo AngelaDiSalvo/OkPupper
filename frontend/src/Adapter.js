@@ -23,7 +23,7 @@ class Adapter {
     let dogs = all_data["dogs"]
     let searchOffset = all_data["search_offset"]
 
-    if (dogs.length) {
+    if (dogs) {
       let formattedDogs = dogs.map(dog => ({
         pet_finder_id: dog.pet_finder_id,
         name: dog.name,
@@ -35,10 +35,9 @@ class Adapter {
         last_update: dog.last_update,
         photos: dog.photos
       }))
-
       return callbackFunction(formattedDogs, searchOffset)
     } else {
-      return "No dogs matching criteria"
+      console.log("No dogs matching criteria")
     }
   }
 
