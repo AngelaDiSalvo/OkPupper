@@ -12,6 +12,11 @@ class UserDogsController < ApplicationController
       render json: {status: 500, message: "Could not save dog"}.to_json
     end
   end
+  
+  def index
+    dogs = UserDog.where(user.id == user_dog_params[:userId])
+    byebug
+  end
 
   private
 

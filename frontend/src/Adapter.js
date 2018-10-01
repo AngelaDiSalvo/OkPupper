@@ -23,7 +23,7 @@ class Adapter {
     let dogs = all_data["dogs"]
     let searchOffset = all_data["search_offset"]
 
-    if (dogs.length) {
+    if (dogs) {
       let formattedDogs = dogs.map(dog => ({
         pet_finder_id: dog.pet_finder_id,
         name: dog.name,
@@ -59,6 +59,21 @@ class Adapter {
 
     let dogs = await result.json()
   }
+  
+  static async getSavedDogs(userId) {
+    let result = await fetch('http://localhost:3000/user_dogs', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_dog: {
+          userId: 5
+        }
+      })
+    })
+  }
+  
 }
 
 export default Adapter

@@ -23,13 +23,15 @@ class DogsController < ApplicationController
       api_data: api_data[:search_offset],
       dogs: filter_viewed_dogs(api_data["dogs"])
     }
-
-    render json: filtered_data
+    
+    if filtered_data["dogs"].count > 0
+      render json: filtered_data {status: 200}
+    else
+      render json: {status: 500, message: "No dogs matching criteria"}.to_json
+    end
   end
 
   private
-
-  #note: josh mentioned moving all api related conversions to pet_finder_api.rb and just using this to check for true/false
 
   def dog_params
     params.require(:dog).permit(:zipCode, :size, :gender, :age, :offset)
@@ -67,6 +69,7 @@ class DogsController < ApplicationController
     
   def filter_viewed_dogs(dogs_array)
     #note: this logic needs to be replaced with UserDog once we have user
+    byebug
     dogs_array.reject {|dog_object| Dog.exists?(pet_finder_id: dog_object[:pet_finder_id])}
   end
 end
