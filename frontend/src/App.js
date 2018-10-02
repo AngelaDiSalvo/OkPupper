@@ -17,14 +17,14 @@ class App extends Component {
     password: "",
     zipCode: "",
     email: "",
-    isLoggedIn: true,
+    isLoggedIn: false,
     toggleSignUp: false,
     toggleLogin: false,
-    showSavedDogs: false
+    showSavedDogs: false,
+    isLoaded: false
   }
 
   componentDidUpdate() {
-    console.log(this.state.dogArray.length);
     if (this.state.dogArray.length < 10 && this.state.dogArray.length >= 1) {
       this.getDogData()
     }
@@ -52,7 +52,23 @@ class App extends Component {
       email: e.target[0].value,
       password: e.target[1].value
     })
+    .then(this.setState(
+      {isLoaded: true}
+    ))
+    .then(() => {
+      if (localStorage.token !== "undefined" && this.state.isLoaded === true) {
+        this.setState({
+          isLoggedIn: true
+        })
+      }
+    })
+
     // authenticate then call toggleLogin
+  }
+
+  checkTokenAndLogin = data => {
+    // checking local store to see if there's anything in it.
+    // if there is, render home page
   }
 
 

@@ -1,8 +1,9 @@
 class UserDogsController < ApplicationController
+  
   def create
-    #note: change user to actual based on user_id: user_dog_params[:userId] when ready
-
-    user_dog = UserDog.new(user: User.find(5), pet_finder_id: user_dog_params[:petFinderId], is_saved: user_dog_params[:isUserSaving])
+    user_id = decoded_token[0]["user_id"]
+    
+    user_dog = UserDog.new(user_id: user_id, pet_finder_id: user_dog_params[:petFinderId], is_saved: user_dog_params[:isUserSaving])
 
     if user_dog.save
       render json: {status: 200, message: "Successfully saved dog"}.to_json
@@ -10,25 +11,25 @@ class UserDogsController < ApplicationController
       render json: {status: 500, message: "Could not save dog"}.to_json
     end
   end
-  
-  def index
-    dogs = UserDog.where(["is_saved = :is_saved", {is_saved: true}])
+
+  def get_saved_dogs
+    user_id = decoded_token[0]["user_id"]
     
-    dogs_info = dogs.map do |dog| 
+    dogs = UserDog.where(["is_saved = :is_saved and user_id = :user_id", {is_saved: true, user_id: user_id}])
+
+    dogs_info = dogs.map do |dog|
       PetFinderApi.get_dog_info(dog.pet_finder_id) || nil
     end
-    
+
     filtered_dogs = dogs_info.select{|dog_hash| dog_hash != nil}
 
-    #note: update to user id when add authentication
-    # where(user.id == user_dog_params[:userId])
     render json: filtered_dogs
   end
 
 
   def get_pet_finder_dogs
-    user_id = 5
-    
+    user_id = decoded_token[0]["user_id"]
+
     potential_filters = [
       ["location", dog_params[:zipCode]],
       ["size", convert_size(dog_params[:size])],
@@ -42,12 +43,12 @@ class UserDogsController < ApplicationController
     api_data = PetFinderApi.get_dogs_array(requested_filters)
 
     #note: also need to check if dogs have been saved in DB before returning new dogs; this is expensive, maybe push to client side
-    
+
     filtered_data = {
       api_data: api_data[:search_offset],
       dogs: filter_viewed_dogs(user_id, api_data["dogs"])
     }
-    
+
     if filtered_data[:dogs].count > 0
       render json: filtered_data
     else
@@ -56,9 +57,8 @@ class UserDogsController < ApplicationController
   end
 
   private
-  
   def user_dog_params
-    params.require(:user_dog).permit(:userId, :petFinderId, :isUserSaving)
+    params.require(:user_dog).permit(:petFinderId, :isUserSaving)
   end
 
   def dog_params
@@ -97,14 +97,14 @@ class UserDogsController < ApplicationController
 
   def filter_viewed_dogs(user_id, dogs_array)
     user_dogs = UserDog.where(["user_id = :user_id", {user_id: user_id}])
-    
+
     transformed_user_dogs = user_dogs.map{|dog_object| dog_object.pet_finder_id}
-    
+
     filtered_dogs = dogs_array.reject do |dog_object|
       is_dog_in_list(transformed_user_dogs, dog_object[:pet_finder_id].to_i)
     end
   end
-  
+
   def is_dog_in_list(database_array, pet_finder_id)
     database_array.include?(pet_finder_id)
   end
