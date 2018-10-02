@@ -24,17 +24,7 @@ class Adapter {
     let searchOffset = all_data["search_offset"]
 
     if (dogs) {
-      let formattedDogs = dogs.map(dog => ({
-        pet_finder_id: dog.pet_finder_id,
-        name: dog.name,
-        age: dog.age,
-        size: dog.size,
-        breed: dog.breed,
-        sex: dog.sex,
-        description: dog.description,
-        last_update: dog.last_update,
-        photos: dog.photos
-      }))
+      const formattedDogs = Adapter._formatDogs(dogs)
       return callbackFunction(formattedDogs, searchOffset)
     } else {
       console.log("No dogs matching criteria")
@@ -61,6 +51,9 @@ class Adapter {
 
   static async getSavedDogs() {
     let result = await fetch('http://localhost:3000/user_dogs')
+    let dogs = await result.json()
+
+    console.log(dogs);
   }
 
   static async createNewUser(args) {
@@ -77,6 +70,24 @@ class Adapter {
           password
         }
       })
+    })
+  }
+  
+  static _formatDogs(dogsObjectArray) {
+    dogsObjectArray.map(dog => Adapter._parseOneDog(dog))
+  }
+  
+  static _parseOneDog(dogObject) {
+    ({
+      pet_finder_id: dogObject.pet_finder_id,
+      name: dogObject.name,
+      age: dogObject.age,
+      size: dogObject.size,
+      breed: dogObject.breed,
+      sex: dogObject.sex,
+      description: dogObject.description,
+      last_update: dogObject.last_update,
+      photos: dogObject.photos
     })
   }
 }

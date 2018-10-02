@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const DogFrontCard = (props) => {
   const imgUrls = props.dogData.photos
   console.log(props.dogData.pet_finder_id);
@@ -10,8 +11,8 @@ const DogFrontCard = (props) => {
       Age: {props.dogData.age}<br/>
       Breed: {props.dogData.breed}<br/>
       Gender: {props.dogData.sex}<br/>
-      <button name="remove" onClick={props.handleClick}>not today</button>
-      <button name="save" onClick={props.handleClick}>save</button>
+      <img name="remove" onClick={props.handleClick} src={require('../images/error.png')} style={{width:35}}/>
+      <img name="save" onClick={props.handleClick} src={require('../images/success.png')} style={{width:35}}/>
     </div>
   )
 }
