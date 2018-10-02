@@ -37,20 +37,22 @@ class App extends Component {
   }
 
   loginRedirect = e => {
+    this.toggleLogin()
+  }
+
+  toggleLogin() {
     this.setState({
-      toggleLogin:true
+      toggleLogin:!this.state.toggleLogin
     })
   }
 
   handleLogin = e => {
     e.preventDefault()
-    Adapter.loginUser({
+    x = Adapter.loginUser({
       email: e.target[0].value,
       password: e.target[1].value
     })
-    this.setState({
-      isLoggedIn: true
-    })
+    // authenticate then call toggleLogin
   }
 
 
@@ -102,13 +104,13 @@ class App extends Component {
       dogArray: newArray
     })
   }
-  
+
   showSavedDogs = (e) => {
     e.preventDefault()
     console.log(e);
     Adapter.getSavedDogs()
     this.setState({showSavedDogs: true})
-    
+
   }
 
   render() {

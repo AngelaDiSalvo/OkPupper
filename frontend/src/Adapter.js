@@ -71,6 +71,7 @@ class Adapter {
         }
       })
     })
+  }
 
   static async loginUser(args) {
     const {email, password} = args
@@ -86,12 +87,17 @@ class Adapter {
           password
         }
       })
+    })
 
-  
+    let all_data = await result.json()
+    
+    //authorize user here OR create a private method below and reference the method here
+  }
+
   static _formatDogs(dogsObjectArray) {
     dogsObjectArray.map(dog => Adapter._parseOneDog(dog))
   }
-  
+
   static _parseOneDog(dogObject) {
     ({
       pet_finder_id: dogObject.pet_finder_id,
