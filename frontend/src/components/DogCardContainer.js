@@ -30,7 +30,9 @@ class DogCardContainer extends React.Component {
   render() {
     return (
       <div className='DogCardContainer'>
-        {this.props.dogArray.length>0 ? this.renderDog() : null}
+        <div className="card">
+          {this.props.dogArray.length>0 ? this.renderDog() : null}
+        </div>
       </div>
     )
   }

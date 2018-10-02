@@ -20,12 +20,22 @@
 .DogCardContainer {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 500px;
+    max-height: 500px;
     margin: auto;
-    text-align: center;
+    text-align: auto;
     background-color: #cccccc;
+}
+
+.DogFrontCard:img {
+    position: absolute;
+    clip: rect(0px,60px,200px,0px);
 }
 
 body {
   background-image: url("./images/logo.jpg");
   background-color: #cccccc;
+}
+
+.Navbar {
+  color: black;
 }

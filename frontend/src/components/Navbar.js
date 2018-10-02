@@ -4,32 +4,36 @@ import React from 'react'
     render() {
       return (
         <div className='Navbar'>
-          <form onSubmit={this.props.handleSubmit}>
-            Age: <select onChange={this.props.handleAgeChange}>
-              <option selected value="any">Any</option>
-              <option value="puppy">Puppy</option>
-              <option value="young">Young</option>
-              <option value="adult">Adult</option>
-              <option value="senior">Senior</option>
-            </select>
-            Size: <select onChange={this.props.handleSizeChange}>
-              <option selected value="any">Any</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="xl">XL</option>
-            </select>
-            Gender: <select onChange={this.props.handleGenderChange}>
-              <option selected value="any">Any</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            Enter Zip: <input onChange={this.props.handleZipChange}/>
-            <input type="submit" value="Submit" />
-          </form>
-          <div>
-            <h1><button onClick={this.props.showSavedDogs}><h1>Toggle Saved Dogs</h1></button></h1>
-          </div>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <form className="form-inline my-2 my-lg-0" onSubmit={this.props.handleSubmit}>
+                Age: <select className="form-control form-control" onChange={this.props.handleAgeChange}>
+                  <option selected value="any">Any</option>
+                  <option value="puppy">Puppy</option>
+                  <option value="young">Young</option>
+                  <option value="adult">Adult</option>
+                  <option value="senior">Senior</option>
+                </select>
+                Size: <select className="form-control form-control" onChange={this.props.handleSizeChange}>
+                  <option selected value="any">Any</option>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                  <option value="xl">XL</option>
+                </select>
+                Gender: <select className="form-control form-control" onChange={this.props.handleGenderChange}>
+                  <option selected value="any">Any</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                Enter Zip: <input className="form-control form-control" onChange={this.props.handleZipChange}/>
+                <input type="submit" value="Submit" />
+              </form>
+              <div>
+                <button type="button" className={"btn btn-secondary btn-lg"} onClick={this.props.showSavedDogs}>Toggle Saved Dogs</button>
+              </div>
+            </div>
+          </nav>
         </div>
       )
     }
