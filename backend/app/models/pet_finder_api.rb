@@ -27,11 +27,16 @@ class PetFinderApi
   end
 
   def self.get_dog_info(dog_id)
+    
     api_data= RestClient.get("http://api.petfinder.com/pet.get?format=json&key=#{ENV['petFinderAPIKey']}&id=#{dog_id}")
     parsed_data = JSON.parse(api_data)
-    dog_hash = parsed_data["petfinder"]["pet"]
-
-    self.parse_one_dog(dog_hash)
+    
+    if parsed_data["petfinder"]["pet"]
+      dog_hash = parsed_data["petfinder"]["pet"]
+      self.parse_one_dog(dog_hash)
+    else
+      nil
+    end
   end
 
   private

@@ -19,12 +19,13 @@ class App extends Component {
     email: "",
     isLoggedIn: false,
     toggleSignUp: false,
-    toggleLogin: false
+    toggleLogin: false,
+    showSavedDogs: false
   }
 
   componentDidUpdate() {
     console.log(this.state.dogArray.length);
-    if (this.state.dogArray.length < 10) {
+    if (this.state.dogArray.length < 10 && this.state.dogArray.length >= 1) {
       this.getDogData()
     }
   }
@@ -101,6 +102,14 @@ class App extends Component {
       dogArray: newArray
     })
   }
+  
+  showSavedDogs = (e) => {
+    e.preventDefault()
+    console.log(e);
+    Adapter.getSavedDogs()
+    this.setState({showSavedDogs: true})
+    
+  }
 
   render() {
     if (this.state.isLoggedIn) {
@@ -113,6 +122,7 @@ class App extends Component {
             handleSizeChange={(e) => this.setState({size: e.target.value})}
             handleGenderChange={(e) => this.setState({gender: e.target.value})}
             handleZipChange={(e) => this.setState({zip: e.target.value})}
+            showSavedDogs={this.showSavedDogs}
           />
         </header>
         <p className="App-intro">

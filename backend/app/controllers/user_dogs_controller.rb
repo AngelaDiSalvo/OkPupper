@@ -12,13 +12,17 @@ class UserDogsController < ApplicationController
   end
   
   def index
-    dogs = UserDog.all
+    dogs = UserDog.where(["is_saved = :is_saved", {is_saved: true}])
     
-    dogs.map { |dog| dog.pet_finder_id}
+    dogs_info = dogs.map do |dog| 
+      PetFinderApi.get_dog_info(dog.pet_finder_id) || nil
+    end
+    
+    filtered_dogs = dogs_info.select{|dog_hash| dog_hash != nil}
 
     #note: update to user id when add authentication
     # where(user.id == user_dog_params[:userId])
-    render json: dogs
+    render json: filtered_dogs
   end
 
 

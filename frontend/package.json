@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "is-valid-zip": "0.0.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-image-gallery": "^0.8.11",

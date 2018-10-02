@@ -1,18 +1,6 @@
 import React from 'react'
-
+// note: need to add is-valid-zip validation here. https://medium.com/@gaperton/react-forms-with-value-links-part-2-validation-9d1ba78f8e49
   class Navbar extends React.Component {
-    state = {
-      savedDogs: false
-
-    }
-
-    showSavedDogs = () => {
-      const showingOrNot = this.state.savedDogs
-      this.setState({
-        savedDogs: !showingOrNot
-      })
-    }
-
     render() {
       return (
         <div className='Navbar'>
@@ -40,7 +28,7 @@ import React from 'react'
             <input type="submit" value="Submit" />
           </form>
           <div>
-            <h1><button onClick={this.showSavedDogs}><h1>Toggle Saved Dogs</h1></button></h1>
+            <h1><button onClick={this.props.showSavedDogs}><h1>Toggle Saved Dogs</h1></button></h1>
           </div>
         </div>
       )
