@@ -17,7 +17,7 @@ class App extends Component {
     password: "",
     zipCode: "",
     email: "",
-    isLoggedIn: false,
+    isLoggedIn: true,
     toggleSignUp: false,
     toggleLogin: false,
     showSavedDogs: false
@@ -48,7 +48,7 @@ class App extends Component {
 
   handleLogin = e => {
     e.preventDefault()
-    x = Adapter.loginUser({
+    Adapter.loginUser({
       email: e.target[0].value,
       password: e.target[1].value
     })

@@ -90,16 +90,16 @@ class Adapter {
     })
 
     let all_data = await result.json()
-    
+
     //authorize user here OR create a private method below and reference the method here
   }
 
   static _formatDogs(dogsObjectArray) {
-    dogsObjectArray.map(dog => Adapter._parseOneDog(dog))
+    return dogsObjectArray.map(dog => Adapter._parseOneDog(dog))
   }
 
   static _parseOneDog(dogObject) {
-    ({
+    return ({
       pet_finder_id: dogObject.pet_finder_id,
       name: dogObject.name,
       age: dogObject.age,
