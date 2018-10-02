@@ -5,7 +5,8 @@ class Adapter {
     let result = await fetch('http://localhost:3000/user_dogs/get_dogs', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer '+localStorage.token
       },
       body: JSON.stringify({
         dog: {
@@ -35,12 +36,12 @@ class Adapter {
     let result = await fetch('http://localhost:3000/user_dogs', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer '+localStorage.token
       },
       body: JSON.stringify({
         user_dog: {
-          userId: 5,
-          petFinderId,
+            petFinderId,
           isUserSaving
         }
       })
@@ -50,7 +51,14 @@ class Adapter {
   }
 
   static async getSavedDogs() {
-    let result = await fetch('http://localhost:3000/user_dogs')
+    let result = await fetch('http://localhost:3000/user_dogs', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer '+localStorage.token
+      }
+    })
+    
     let dogs = await result.json()
 
     console.log(dogs);
@@ -94,10 +102,6 @@ class Adapter {
           localStorage.token = data_with_token.jwt;
       }
     })
-
-    //let all_data = await result.json()
-
-    //authorize user here OR create a private method below and reference the method here
   }
 
   static _formatDogs(dogsObjectArray) {
