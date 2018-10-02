@@ -1,4 +1,6 @@
 class UserDogsController < ApplicationController
+  skip_before_action
+
   def create
     #note: change user to actual based on user_id: user_dog_params[:userId] when ready
 
@@ -10,14 +12,14 @@ class UserDogsController < ApplicationController
       render json: {status: 500, message: "Could not save dog"}.to_json
     end
   end
-  
+
   def index
     dogs = UserDog.where(["is_saved = :is_saved", {is_saved: true}])
-    
-    dogs_info = dogs.map do |dog| 
+
+    dogs_info = dogs.map do |dog|
       PetFinderApi.get_dog_info(dog.pet_finder_id) || nil
     end
-    
+
     filtered_dogs = dogs_info.select{|dog_hash| dog_hash != nil}
 
     #note: update to user id when add authentication
@@ -28,7 +30,7 @@ class UserDogsController < ApplicationController
 
   def get_pet_finder_dogs
     user_id = 5
-    
+
     potential_filters = [
       ["location", dog_params[:zipCode]],
       ["size", convert_size(dog_params[:size])],
@@ -42,12 +44,12 @@ class UserDogsController < ApplicationController
     api_data = PetFinderApi.get_dogs_array(requested_filters)
 
     #note: also need to check if dogs have been saved in DB before returning new dogs; this is expensive, maybe push to client side
-    
+
     filtered_data = {
       api_data: api_data[:search_offset],
       dogs: filter_viewed_dogs(user_id, api_data["dogs"])
     }
-    
+
     if filtered_data[:dogs].count > 0
       render json: filtered_data
     else
@@ -56,7 +58,6 @@ class UserDogsController < ApplicationController
   end
 
   private
-  
   def user_dog_params
     params.require(:user_dog).permit(:userId, :petFinderId, :isUserSaving)
   end
@@ -97,14 +98,14 @@ class UserDogsController < ApplicationController
 
   def filter_viewed_dogs(user_id, dogs_array)
     user_dogs = UserDog.where(["user_id = :user_id", {user_id: user_id}])
-    
+
     transformed_user_dogs = user_dogs.map{|dog_object| dog_object.pet_finder_id}
-    
+
     filtered_dogs = dogs_array.reject do |dog_object|
       is_dog_in_list(transformed_user_dogs, dog_object[:pet_finder_id].to_i)
     end
   end
-  
+
   def is_dog_in_list(database_array, pet_finder_id)
     database_array.include?(pet_finder_id)
   end
