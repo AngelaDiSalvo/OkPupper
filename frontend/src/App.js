@@ -17,7 +17,7 @@ class App extends Component {
     password: "",
     zipCode: "",
     email: "",
-    isLoggedIn: true,
+    isLoggedIn: false,
     toggleSignUp: false,
     toggleLogin: false,
     showSavedDogs: false
@@ -27,7 +27,7 @@ class App extends Component {
     console.log(this.state.dogArray.length);
     if (this.state.dogArray.length < 10 && this.state.dogArray.length >= 1) {
       this.getDogData()
-    } 
+    }
   }
 
   signUpRedirect = e => {
@@ -54,7 +54,7 @@ class App extends Component {
     this.setState({searchOffset: 0, dogArray: []})
     this.getDogData()
   }
-  
+
   getDogData = () => {
     Adapter.getDogData({
       zipCode: this.state.zip,
