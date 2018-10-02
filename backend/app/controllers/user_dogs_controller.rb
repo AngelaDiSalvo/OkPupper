@@ -12,10 +12,10 @@ class UserDogsController < ApplicationController
     end
   end
 
-  def index
+  def get_saved_dogs
     user_id = decoded_token[0]["user_id"]
     
-    dogs = UserDog.where(["is_saved = :is_saved, user_id = :user_id", {is_saved: true, user_id: user_id}])
+    dogs = UserDog.where(["is_saved = :is_saved and user_id = :user_id", {is_saved: true, user_id: user_id}])
 
     dogs_info = dogs.map do |dog|
       PetFinderApi.get_dog_info(dog.pet_finder_id) || nil

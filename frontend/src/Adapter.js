@@ -41,7 +41,7 @@ class Adapter {
       },
       body: JSON.stringify({
         user_dog: {
-            petFinderId,
+          petFinderId,
           isUserSaving
         }
       })
@@ -51,7 +51,7 @@ class Adapter {
   }
 
   static async getSavedDogs() {
-    let result = await fetch('http://localhost:3000/user_dogs', {
+    let result = await fetch('http://localhost:3000/user_dogs/get_saved_dogs', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
