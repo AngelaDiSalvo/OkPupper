@@ -71,7 +71,22 @@ class Adapter {
         }
       })
     })
-  }
+
+  static async loginUser(args) {
+    const {email, password} = args
+
+    let result = await fetch('http://localhost:3000/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          email,
+          password
+        }
+      })
+
   
   static _formatDogs(dogsObjectArray) {
     dogsObjectArray.map(dog => Adapter._parseOneDog(dog))

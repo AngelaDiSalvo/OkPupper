@@ -42,12 +42,17 @@ class App extends Component {
     })
   }
 
-  // const signUpRedirect = e => {
-  //   //when something is true, show the signup form.
-  //   this.setState({
-  //     toggleSignUp: true
-  //   })
-  // }
+  handleLogin = e => {
+    e.preventDefault()
+    Adapter.loginUser({
+      email: e.target[0].value,
+      password: e.target[1].value
+    })
+    this.setState({
+      isLoggedIn: true
+    })
+  }
+
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -142,6 +147,7 @@ class App extends Component {
         password={this.state.password}
         email={this.state.email}
         zipCode={this.state.zipCode}
+        handleLogin={this.handleLogin}
       />
     </div>
   )
