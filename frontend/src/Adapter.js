@@ -88,8 +88,14 @@ class Adapter {
         }
       })
     })
+    .then(resp => resp.json())
+    .then(data_with_token => {
+        if (!!data_with_token.jwt) {
+          localStorage.token = data_with_token.jwt;
+      }
+    })
 
-    let all_data = await result.json()
+    //let all_data = await result.json()
 
     //authorize user here OR create a private method below and reference the method here
   }
