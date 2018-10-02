@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
+  before_action :authorized, except: [:new, :create]
 
   def encode_token(payload)
     # don't forget to hide your secret in an environment variable

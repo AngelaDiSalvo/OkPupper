@@ -6,12 +6,12 @@ const Login = (props) => {
   return (
     <div id='login-box'>
       <div class="left">
-        <form onSubmit={console.log}>
+        <form onSubmit={e => props.handleLogin(e)}>
           <label>
             Username:
-            <input type="text" username="username"/>
+            <input type="text" username="email"/>
             Password:
-            <input type="text" password="password"/>
+            <input type="password" password="password"/>
           </label>
           <input type="submit" value="Login"/>
         </form>

@@ -25,7 +25,7 @@ const Homepage = (props) => {
     } else if (props.toggleLogin === true) {
       return (
         <div>
-          <Login />
+          <Login handleLogin={props.handleLogin}/>
         </div>
       )
     }
