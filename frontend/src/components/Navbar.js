@@ -5,7 +5,6 @@ import React from 'react'
       return (
         <div className='Navbar'>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <form className="form-inline my-2 my-lg-0" onSubmit={this.props.handleSubmit}>
                 Age: <select className="form-control form-control" onChange={this.props.handleAgeChange}>
                   <option selected value="any">Any</option>
@@ -30,9 +29,9 @@ import React from 'react'
                 <input type="submit" value="Submit" />
               </form>
               <div>
-                <button type="button" className={"btn btn-secondary btn-lg"} onClick={this.props.showSavedDogs}>Toggle Saved Dogs</button>
+                <button className="btn btn-secondary btn-lg" onClick={this.props.showSavedDogs}>Toggle Saved Dogs</button>
               </div>
-            </div>
+
           </nav>
         </div>
       )

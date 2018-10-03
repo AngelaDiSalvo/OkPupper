@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import DogCardContainer from './components/DogCardContainer'
 import Adapter from './Adapter'
 import Homepage from "./components/Homepage"
+import SavedDogs from "./components/SavedDogs"
 
 class App extends Component {
   state = {
@@ -17,11 +18,12 @@ class App extends Component {
     password: "",
     zipCode: "",
     email: "",
-    isLoggedIn: false,
+    isLoggedIn: true,
     toggleSignUp: false,
     toggleLogin: false,
     showSavedDogs: false,
-    isLoaded: false
+    isLoaded: false,
+    savedDogArray: [],
   }
 
   componentDidUpdate() {
@@ -111,9 +113,8 @@ class App extends Component {
   handleClick = (e) => {
     e.preventDefault()
 
-    const newArray = this.state.dogArray
+    const newArray = [...this.state.dogArray]
     newArray.shift()
-
     Adapter.saveDogResult(this.state.dogArray[0].pet_finder_id, e.target.name === "save")
 
     this.setState({
@@ -121,55 +122,64 @@ class App extends Component {
     })
   }
 
-  showSavedDogs = (e) => {
+  showSavedDogs = async (e) => {
     e.preventDefault()
-    console.log(e);
-    Adapter.getSavedDogs()
-    this.setState({showSavedDogs: true})
+    let showSavedDogs = !this.state.showSavedDogs
+    let dogs;
+    if (showSavedDogs) {
+      dogs = await Adapter.getSavedDogs()
 
+    } else {
+      dogs = []
+    }
+    this.setState({showSavedDogs: showSavedDogs, savedDogArray: dogs})
   }
 
   render() {
     if (this.state.isLoggedIn) {
+      return (
+        <div className="App">
+          <header className="App-header">
+            <Navbar
+              handleSubmit={this.handleSubmit}
+              handleAgeChange={(e) => this.setState({age: e.target.value})}
+              handleSizeChange={(e) => this.setState({size: e.target.value})}
+              handleGenderChange={(e) => this.setState({gender: e.target.value})}
+              handleZipChange={(e) => this.setState({zip: e.target.value})}
+              showSavedDogs={this.showSavedDogs}
+            />
+          </header>
+          <p className="App-intro">
+            {this.state.showSavedDogs ?
+              <SavedDogs
+                savedDogs={this.state.savedDogArray}
+              /> :
+              <DogCardContainer
+                dogArray={this.state.dogArray}
+                handleClick={this.handleClick}
+              />}
+          </p>
+        </div>
+      )
+    };
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <Navbar
-            handleSubmit={this.handleSubmit}
-            handleAgeChange={(e) => this.setState({age: e.target.value})}
-            handleSizeChange={(e) => this.setState({size: e.target.value})}
-            handleGenderChange={(e) => this.setState({gender: e.target.value})}
-            handleZipChange={(e) => this.setState({zip: e.target.value})}
-            showSavedDogs={this.showSavedDogs}
-          />
-        </header>
-        <p className="App-intro">
-          <DogCardContainer
-            dogArray={this.state.dogArray}
-            handleClick={this.handleClick}
-          />
-        </p>
+      <div>
+        <Homepage
+          signUpRedirect={this.signUpRedirect}
+          toggleSignUp={this.state.toggleSignUp}
+          loginRedirect={this.loginRedirect}
+          toggleLogin={this.state.toggleLogin}
+          submitCredentials={this.submitCredentials}
+          username={this.state.username}
+          password={this.state.password}
+          email={this.state.email}
+          zipCode={this.state.zipCode}
+          handleLogin={this.handleLogin}
+        />
       </div>
     )
-  };
-
-  return (
-    <div>
-      <Homepage
-        signUpRedirect={this.signUpRedirect}
-        toggleSignUp={this.state.toggleSignUp}
-        loginRedirect={this.loginRedirect}
-        toggleLogin={this.state.toggleLogin}
-        submitCredentials={this.submitCredentials}
-        username={this.state.username}
-        password={this.state.password}
-        email={this.state.email}
-        zipCode={this.state.zipCode}
-        handleLogin={this.handleLogin}
-      />
-    </div>
-  )
-}
+  }
 }
 
 export default App;

@@ -58,10 +58,11 @@ class Adapter {
         'Authorization': 'Bearer '+localStorage.token
       }
     })
-    
+
     let dogs = await result.json()
 
-    console.log(dogs);
+    
+    return dogs
   }
 
   static async createNewUser(args) {
@@ -100,6 +101,8 @@ class Adapter {
     .then(data_with_token => {
         if (!!data_with_token.jwt) {
           localStorage.token = data_with_token.jwt;
+      } else {
+        localStorage.token = "undefined"
       }
     })
   }
